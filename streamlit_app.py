@@ -39,7 +39,7 @@ fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
 # write your own comment - what does this do?
 st.dataframe(fruityvice_normalized)
-
+st.stop()
 
 # import snowflake.connector
 my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
