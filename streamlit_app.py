@@ -66,7 +66,7 @@ def insert_row_snowflake(new_fruit):
     my_cur.execute("insert into fruit_load_list values('"+new_fruit+"')")
     return "Thank you for adding " + new_fruit
 
-add_my_fruit = st.text_input("What fruit would you like to add?", "Jackfruit")
+add_my_fruit = st.text_input("What fruit would you like to add?")
 try:
   if not add_my_fruit:
     st.error("No fruit to Add")
