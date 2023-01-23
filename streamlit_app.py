@@ -63,10 +63,8 @@ if st.button('Get Fruit List'):
  
 
 def insert_row_snowflake(new_fruit):
-  my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
   with my_cnx.cursor() as my_cur:
     my_cur.execute("insert into fruit_load_list values('"+new_fruit+"')")
-    my_cnx.close()
     return "Thank you for adding " + new_fruit
 
 add_my_fruit = st.text_input("What fruit would you like to add?")
@@ -74,7 +72,9 @@ try:
   if not add_my_fruit:
     st.error("No fruit to Add")
   else:
+    my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
     st.write(insert_row_snowflake(add_my_fruit))
+    my_cnx.close()
 
 except URLError as e:
   st.error()
