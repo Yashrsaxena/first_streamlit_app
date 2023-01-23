@@ -26,22 +26,23 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 
 # Display the table on the page.
 st.dataframe(fruits_to_show)
-
+# FRUITYVICE DATA ---------------------------------------------------------------------------------
 st.header("Fruityvice Fruit Advice!")
+try:
+  fruit_choice = st.text_input("What fruit would you like information about?")
+  if not fruit_choice:
+    st.error("Please enter any fruit")
+  else:
+    fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+    fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+    st.dataframe(fruityvice_normalized)
 
-fruit_choice = st.text_input("What fruit would you like information about?", "Kiwi")
-st.write("The user entered", fruit_choice)
+except URLErrora as e:
+  st.error()
 
-# import requests as req
-fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-
-# normalizing JSON response
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-# write your own comment - what does this do?
-st.dataframe(fruityvice_normalized)
 st.stop()
 
-# import snowflake.connector
+# import snowflake.connector - SNOWFLAKE DATA (FDC DATA) -------------------------------------------
 my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
