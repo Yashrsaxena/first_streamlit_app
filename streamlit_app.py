@@ -67,5 +67,12 @@ def insert_row_snowflake(new_fruit):
     return "Thank you for adding " + new_fruit
 
 add_my_fruit = st.text_input("What fruit would you like to add?", "Jackfruit")
-insert_row_snowflake(add_my_fruit)
+try:
+  if not add_my_fruit:
+    st.error("No fruit to Add")
+  else:
+    insert_row_snowflake(add_my_fruit)
+
+except URLError as e:
+  st.error()
 st.stop()
