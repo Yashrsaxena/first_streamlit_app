@@ -74,7 +74,7 @@ try:
   if not add_my_fruit:
     st.error("No fruit to Add")
   else:
-    st.write("Thank you for adding the fruit "+insert_row_snowflake(add_my_fruit))
+    st.write(insert_row_snowflake(add_my_fruit))
 
 except URLError as e:
   st.error()
