@@ -46,15 +46,21 @@ try:
 except URLError as e:
   st.error()
 
-st.stop()
-
 # import snowflake.connector - SNOWFLAKE DATA (FDC DATA) -------------------------------------------
-my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
-my_data_row = my_cur.fetchall()
 st.header("THE FRUIT LOAD LIST CONTAINS:")
-st.dataframe(my_data_row)
+#sNOWFLAKE-RELATED FUNCTIONS
+def get_fruit_load_list():
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
+    return my_cur.fetchall()
+
+#BUTTON THAT LOADS THE DATA BY CALLING THE ABOVE FUNCTION
+if st.button('Get Fruit Load List'):
+  my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
+  my_data_row = get_fruit_load_list()
+  st.dataframe(my_data_row)
+  
+st.stop()
 
 add_my_fruit = st.text_input("What fruit would you like to add?", "Jackfruit")
 st.write("Thank you for adding " + add_my_fruit)
