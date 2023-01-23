@@ -47,7 +47,7 @@ except URLError as e:
   st.error()
 
 # import snowflake.connector - SNOWFLAKE DATA (FDC DATA) -------------------------------------------
-st.header("THE FRUIT LOAD LIST CONTAINS:")
+st.header("View Our Fruit List - Add Your Favorites!")
 #sNOWFLAKE-RELATED FUNCTIONS
 def get_fruit_load_list():
   with my_cnx.cursor() as my_cur:
@@ -55,9 +55,10 @@ def get_fruit_load_list():
     return my_cur.fetchall()
 
 #BUTTON THAT LOADS THE DATA BY CALLING THE ABOVE FUNCTION
-if st.button('Get Fruit Load List'):
+if st.button('Get Fruit List'):
   my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
   my_data_row = get_fruit_load_list()
+  my_cnx.close()
   st.dataframe(my_data_row)
  
 
